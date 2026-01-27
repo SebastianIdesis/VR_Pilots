@@ -1,9 +1,12 @@
 # Data inspection Sebastian
 import pyxdf
+import numpy as np
 
 # Load the XDF file
 #file_path = "Javad_Subject1_DryRun.xdf"
-file_path = "Computer_Sebastian_sub-P001_Roller_Coaster.xdf"
+#file_path = "Computer_Sebastian_sub-P001_Roller_Coaster.xdf"
+#file_path = "sub-P001_ses-S001_task-Default_run-001_eeg.xdf"
+file_path = "sub-P055_ses-S001_task-Default_run-001_eeg.xdf"
 
 streams, header = pyxdf.load_xdf(file_path)
 
@@ -286,11 +289,33 @@ else:
         for ax in axes:
             ax.axvline(fms_time, color='red', alpha=0.2, linestyle='--', linewidth=0.5)
 
-    # Add vertical lines for Game Markers
+    # Add vertical lines for Game Markers with different colors by type
     print(f"\nAdding {len(markers_times_rel)} game markers to the figure...")
+    
+    # Extract event type (before the | separator) for consistent coloring
+    def get_event_type(label):
+        """Extract the event type from marker label (part before |)"""
+        if isinstance(label, str) and '|' in label:
+            return label.split('|')[0]
+        return label
+    
+    # Define color mapping for marker types
+    marker_colors = {}
+    unique_marker_types = sorted(set(get_event_type(label) for label in markers_labels))
+    color_palette = ['orange', 'purple', 'green', 'red', 'blue', 'brown', 'pink', 'gray', 'olive', 'cyan']
+    
+    for marker_type, color in zip(unique_marker_types, color_palette):
+        marker_colors[marker_type] = color
+    
+    print(f"Marker type color mapping:")
+    for marker_type, color in marker_colors.items():
+        print(f"  '{marker_type}': {color}")
+    
     for i, (marker_time, marker_label) in enumerate(zip(markers_times_rel, markers_labels)):
+        event_type = get_event_type(marker_label)
+        color = marker_colors.get(event_type, 'orange')
         for ax in axes:
-            ax.axvline(marker_time, color='orange', alpha=0.6, linestyle='-', linewidth=1.5)
+            ax.axvline(marker_time, color=color, alpha=0.6, linestyle='-', linewidth=1.5)
         # Add label to top panel only to avoid clutter
         if i < 20:  # Limit labels to avoid overcrowding
             axes[0].text(marker_time, axes[0].get_ylim()[1], marker_label, 
