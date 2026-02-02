@@ -12,7 +12,10 @@ streams, header = pyxdf.load_xdf(file_path)
 
 # Print the labels and shape of each stream
 print(f"Number of streams: {len(streams)}")
-print("\nStream labels and shapes:")
+print("\n" + "="*80)
+print("STREAM LABELS AND SHAPES - DETAILED INFORMATION")
+print("="*80)
+
 for i, stream in enumerate(streams):
     stream_info = stream['info']
     label = stream_info['name'][0] if 'name' in stream_info else 'Unnamed'
@@ -37,10 +40,75 @@ for i, stream in enumerate(streams):
     else:
         time_stamps_shape = 'N/A'
     
-    print(f"\nStream {i}: {label} (Type: {stream_type})")
+    print(f"\n{'='*80}")
+    print(f"Stream {i}: {label}")
+    print(f"  Type: {stream_type}")
+    print(f"  Description: ", end="")
+    
+    # Add specific descriptions based on stream type/name
+    if stream_type == 'EEG' or 'actiCHamp' in label:
+        print("EEG recording with multiple channels including physiological signals")
+    elif 'Game_Markers' in label or (stream_type == 'Markers' and 'Game' in label):
+        print("Game event markers indicating various game states and events")
+    elif 'FMS_Score' in label or (stream_type == 'Survey' and 'FMS' in label):
+        print("Fast Motion Sickness (FMS) score survey responses from participant")
+    elif 'HMD_MotionData' in label or stream_type == 'HMD_MotionData':
+        print("Head-Mounted Display motion tracking data (position and rotation)")
+    elif 'Coaster' in label or 'RollerCoaster' in label:
+        print("Virtual reality roller coaster simulation data")
+    else:
+        print(f"Stream of type {stream_type}")
+    
     print(f"  time_series shape: {time_series_shape}")
     print(f"  time_stamps shape: {time_stamps_shape}")
-    print(f"  Stream keys: {list(stream.keys())}")
+    print(f"  Available stream keys: {list(stream.keys())}")
+    
+    # For HMD_MotionData and Coaster streams, show the structure/variables
+    if 'HMD_MotionData' in label or stream_type == 'HMD_MotionData':
+        print(f"\n  --- HMD_MotionData Structure Details ---")
+        if 'info' in stream and 'desc' in stream['info']:
+            desc = stream['info']['desc'][0] if stream['info']['desc'] else None
+            if desc is not None and 'channels' in desc and desc['channels'] and 'channel' in desc['channels'][0]:
+                channels = desc['channels'][0]['channel']
+                print(f"  Number of channels/variables: {len(channels)}")
+                print(f"  Channel/Variable labels:")
+                for idx, ch in enumerate(channels):
+                    ch_label = ch['label'][0] if 'label' in ch else f'Channel {idx}'
+                    ch_type = ch['type'][0] if 'type' in ch else 'Unknown'
+                    ch_unit = ch['unit'][0] if 'unit' in ch else 'N/A'
+                    print(f"    [{idx}] {ch_label} (type: {ch_type}, unit: {ch_unit})")
+            else:
+                print(f"  Channel structure not available in stream metadata")
+        
+        # Show sample data structure
+        if 'time_series' in stream and len(stream['time_series']) > 0:
+            sample = stream['time_series'][0]
+            print(f"  Sample data point shape: {np.array(sample).shape}")
+            print(f"  First data point (sample): {sample}")
+    
+    elif 'Coaster' in label or 'RollerCoaster' in label:
+        print(f"\n  --- Coaster/RollerCoaster Structure Details ---")
+        if 'info' in stream and 'desc' in stream['info']:
+            desc = stream['info']['desc'][0] if stream['info']['desc'] else None
+            if desc is not None and 'channels' in desc and desc['channels'] and 'channel' in desc['channels'][0]:
+                channels = desc['channels'][0]['channel']
+                print(f"  Number of channels/variables: {len(channels)}")
+                print(f"  Channel/Variable labels:")
+                for idx, ch in enumerate(channels):
+                    ch_label = ch['label'][0] if 'label' in ch else f'Channel {idx}'
+                    ch_type = ch['type'][0] if 'type' in ch else 'Unknown'
+                    ch_unit = ch['unit'][0] if 'unit' in ch else 'N/A'
+                    print(f"    [{idx}] {ch_label} (type: {ch_type}, unit: {ch_unit})")
+            else:
+                print(f"  Channel structure not available in stream metadata")
+        
+        # Show sample data structure
+        if 'time_series' in stream and len(stream['time_series']) > 0:
+            sample = stream['time_series'][0]
+            print(f"  Sample data point shape: {np.array(sample).shape}")
+            print(f"  First data point (sample): {sample}")
+
+print(f"\n{'='*80}\n")
 
 # Detailed exploration
 print("\n" + "="*80)
