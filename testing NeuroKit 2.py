@@ -26,7 +26,8 @@ RESULTS_DIR = Path("Results")
 RESULTS_DIR.mkdir(exist_ok=True)
 
 #file_path = "sub-P055_ses-S001_task-Default_run-001_eeg.xdf"
-file_path = "sub-P99_ses-S001_task-Default_run-001_eeg.xdf"
+#file_path = "sub-P99_ses-S001_task-Default_run-001_eeg.xdf"
+file_path = "./Data/P99_Sebastian_From_Javad.xdf"
 
 # Extract subject ID from file name (after "sub-P")
 file_name = Path(file_path).name

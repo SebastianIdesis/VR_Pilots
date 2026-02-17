@@ -6,7 +6,8 @@ import numpy as np
 #file_path = "Javad_Subject1_DryRun.xdf"
 #file_path = "Computer_Sebastian_sub-P001_Roller_Coaster.xdf"
 #file_path = "sub-P001_ses-S001_task-Default_run-001_eeg.xdf"
-file_path = "sub-P055_ses-S001_task-Default_run-001_eeg.xdf"
+#file_path = "sub-P055_ses-S001_task-Default_run-001_eeg.xdf"
+file_path = "P99_Sebastian_From_Javad.xdf"
 
 streams, header = pyxdf.load_xdf(file_path)
 

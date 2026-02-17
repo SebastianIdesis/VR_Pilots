@@ -1,0 +1,58 @@
+{
+    "surveyId": "VRSQ_1_final_baseline_6",
+    "participantId": "1",
+    "timestampIsoUtc": "2026-02-10T15:10:50.4086774Z",
+    "attempt": 6,
+    "answers": [
+        {
+            "questionId": "General_discomfort",
+            "value": 1
+        },
+        {
+            "questionId": "Fatigue",
+            "value": 1
+        },
+        {
+            "questionId": "Headache",
+            "value": 1
+        },
+        {
+            "questionId": "Eye_strain",
+            "value": 1
+        },
+        {
+            "questionId": "Difficulty_focusing",
+            "value": 1
+        },
+        {
+            "questionId": "Fullness_of_the_Head",
+            "value": 1
+        },
+        {
+            "questionId": "Blurred_vision",
+            "value": 1
+        },
+        {
+            "questionId": "Dizziness_with_eyes_closed",
+            "value": 1
+        },
+        {
+            "questionId": "Vertigo",
+            "value": 1
+        },
+        {
+            "questionId": "FMS",
+            "value": 9
+        },
+        {
+            "questionId": "Arousal",
+            "value": 3
+        },
+        {
+            "questionId": "Immersion",
+            "value": 4
+        }
+    ],
+    "applicationVersion": "9.2.1",
+    "deviceModel": "OMEN by HP Gaming Laptop 16-wf1xxx (HP)"
+}
