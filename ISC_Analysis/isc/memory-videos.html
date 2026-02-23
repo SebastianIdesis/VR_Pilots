@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script type='text/javascript' src='https://s3.amazonaws.com/mturk-public/externalHIT_v1.js'></script>
+		<style>
+			h2 {
+				font-family: sans-serif;
+			}
+		</style>
+    </head>
+    <body>
+<div>
+	<h2>Broken Heart Doctor - audio-visual (BHD AV)</h2>
+    <div id="player1"></div>
+	<h2>Eyes on the Stars  - audio-visual (EOTS AV)</h2>
+    <div id="player2"></div>
+	<h2>John and Joe  - audio-visual (JJ AV)</h2>
+    <div id="player3"></div>
+	<h2>Lost and Found  - audio-visual (LF AV)</h2>
+    <div id="player4"></div>
+	<h2>Marking the Distance - audio-visual (MTD AV)</h2>
+    <div id="player5"></div>
+	<h2>The Matchmaker - audio-visual (TM AV)</h2>
+    <div id="player6"></div>
+	<h2>Sundays at Rocco&#39s - audio-visual (SAR AV)</h2>
+    <div id="player7"></div>
+	<h2>To R.P. Salazar with Love - audio-visual (TRPSWL AV)</h2>
+    <div id="player8"></div>
+	<h2>Falling in Love at 71 - audio-visual (FILSO AV)</h2>
+    <div id="player9"></div>
+	<h2>Don&#39t Let it Snow - audio-visual (DLIS AV)</h2>
+    <div id="player10"></div>
+	<h2>Broken Heart Doctor - audio-visual-scrambled (BHD AVsc)</h2>
+    <div id="player11"></div>
+	<h2>Eyes on the Stars - audio-visual-scrambled (ETOS AVsc)</h2>
+    <div id="player12"></div>
+	<h2>John and Joe - audio-visual-scrambled (JJ AVsc)</h2>
+    <div id="player13"></div>
+	<h2>Lost and Found - audio-visual-scrambled (LF AVsc)</h2>
+    <div id="player14"></div>
+	<h2>Marking the Distance - audio-visual-scrambled (MTD AVsc)</h2>
+    <div id="player15"></div>
+	<h2>The Matchmaker - audio-visual-scrambled (TM AVsc)</h2>
+    <div id="player16"></div>
+	<h2>Sundays at Rocco&#39s - audio-visual-scrambled (SAR AVsc)</h2>
+    <div id="player17"></div>
+	<h2>To R.P. Salazar with Love - audio-visual-scrambled (TRPSWL AVsc)</h2>
+    <div id="player18"></div>
+	<h2>Falling in Love at 71 - audio-visual-scrambled (FILSO AVsc)</h2>
+    <div id="player19"></div>
+	<h2>Don&#39t Let it Snow - audio-visual-scrambled (DLIS AVsc)</h2>
+	<div id="player20"></div>
+	<h2>Broken Heart Doctor - audio-only (BHD A Only)</h2>
+    <div id="player21"></div>
+	<h2>Eyes on the Stars - audio-only (ETOS A Only)</h2>
+    <div id="player22"></div>
+	<h2>John and Joe - audio-only (JJ A Only)</h2>
+    <div id="player23"></div>
+	<h2>Lost and Found - audio-only (LF A Only)</h2>
+    <div id="player24"></div>
+	<h2>Marking the Distance - audio-only (MTD A Only)</h2>
+    <div id="player25"></div>
+	<h2>The Matchmaker - audio-only (TM A Only)</h2>
+    <div id="player26"></div>
+	<h2>Sundays at Rocco&#39s - audio-only (SAR A Only)</h2>
+    <div id="player27"></div>
+	<h2>To R.P. Salazar with Love - audio-only (TRPSWL A Only)</h2>
+    <div id="player28"></div>
+	<h2>Falling in Love at 71 - audio-only (FILSO A Only)</h2>
+    <div id="player29"></div>
+	<h2>Don&#39t Let it Snow - audio-only (DLIS A Only)</h2>
+	<div id="player30"></div>
+</div>
+        <script>
+            // ISC_Move_Order = {'dr',	'eyes',  'jj',  'lost'  'mark'  'match'  'roccos'  'rp'  's1'  'snow'};
+var videos = ["zmO6vM-sDh0","nAJLi26KEIg","oVBNC5BPf_4","yo57lCu2Ry0",
+			  "wCCGNhsM9fA","-F_lwUzi9sk","DEo-rw2TeAU","ftRSm0By0mY",
+			  "Wr4w1c9JtHE","z9aGjdowJHU",
+			  "TTvBLND1Jrc","22Wv_FsPnyQ","Db_NMN6fK7s","c1QFmqf8Kx0",
+			  "QJtYDglB5vA","dI6LJPHeRnY","dI6LJPHeRnY","NVLrxQ0DvLQ",
+			  "IWJFoB4Yaj0","UOK7BMa7qXs",
+			  "IUL_CI-CGJI","WPmE2lNF47Y","DnsuG1OcNa4","5Ub7v6MIQzw",
+			  "BuvfzfZiyHk","eYxnmCHK_CE","nFKAKezZrPM","SHvoSG1YM8o",
+			  "Xee40Q6wkLY","h2ZnVmTBElM"]; //AVsc versions 2nd, A Only third
+
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+var playerInfoList = [{
+    id: 'player1',
+    height: '390',
+    width: '640',
+    videoId: videos[0]
+}, {
+    id: 'player2',
+    height: '390',
+    width: '640',
+    videoId: videos[1]
+}, {
+    id: 'player3',
+    height: '390',
+    width: '640',
+    videoId: videos[2]
+}, {
+    id: 'player4',
+    height: '390',
+    width: '640',
+    videoId: videos[3]
+}, {
+    id: 'player5',
+    height: '390',
+    width: '640',
+    videoId: videos[4]
+}, {
+    id: 'player6',
+    height: '390',
+    width: '640',
+    videoId: videos[5]
+}, {
+    id: 'player7',
+    height: '390',
+    width: '640',
+    videoId: videos[6]
+}, {
+    id: 'player8',
+    height: '390',
+    width: '640',
+    videoId: videos[7]
+}, {
+    id: 'player9',
+    height: '390',
+    width: '640',
+    videoId: videos[8]
+}, {
+    id: 'player10',
+    height: '390',
+    width: '640',
+    videoId: videos[9]
+}, {
+    id: 'player11',
+    height: '390',
+    width: '640',
+    videoId: videos[10]
+}, {
+    id: 'player12',
+    height: '390',
+    width: '640',
+    videoId: videos[11]
+}, {
+    id: 'player13',
+    height: '390',
+    width: '640',
+    videoId: videos[12]
+}, {
+    id: 'player14',
+    height: '390',
+    width: '640',
+    videoId: videos[13]
+}, {
+    id: 'player15',
+    height: '390',
+    width: '640',
+    videoId: videos[14]
+}, {
+    id: 'player16',
+    height: '390',
+    width: '640',
+    videoId: videos[15]
+}, {
+    id: 'player17',
+    height: '390',
+    width: '640',
+    videoId: videos[16]
+}, {
+    id: 'player18',
+    height: '390',
+    width: '640',
+    videoId: videos[17]
+}, {
+    id: 'player19',
+    height: '390',
+    width: '640',
+    videoId: videos[18]
+}, {
+    id: 'player20',
+    height: '390',
+    width: '640',
+    videoId: videos[19]
+}, {
+    id: 'player21',
+    height: '390',
+    width: '640',
+    videoId: videos[20]
+}, {
+    id: 'player22',
+    height: '390',
+    width: '640',
+    videoId: videos[21]
+}, {
+    id: 'player23',
+    height: '390',
+    width: '640',
+    videoId: videos[22]
+}, {
+    id: 'player24',
+    height: '390',
+    width: '640',
+    videoId: videos[23]
+}, {
+    id: 'player25',
+    height: '390',
+    width: '640',
+    videoId: videos[24]
+}, {
+    id: 'player26',
+    height: '390',
+    width: '640',
+    videoId: videos[25]
+}, {
+    id: 'player27',
+    height: '390',
+    width: '640',
+    videoId: videos[26]
+}, {
+    id: 'player28',
+    height: '390',
+    width: '640',
+    videoId: videos[27]
+}, {
+    id: 'player29',
+    height: '390',
+    width: '640',
+    videoId: videos[28]
+}, {
+    id: 'player30',
+    height: '390',
+    width: '640',
+    videoId: videos[29]
+}];
+
+function onYouTubeIframeAPIReady() {
+    if (typeof playerInfoList === 'undefined') return;
+    
+    for (var i = 0; i < playerInfoList.length; i++) {
+        var curplayer = createPlayer(playerInfoList[i]);
+        players[i] = curplayer;
+    }
+}
+
+var players = new Array();
+
+function createPlayer(playerInfo) {
+    return new YT.Player(playerInfo.id, {
+        height: playerInfo.height,
+        width: playerInfo.width,
+        videoId: playerInfo.videoId,
+    });
+}
+
+        </script>
+    </body>
+
+</html>

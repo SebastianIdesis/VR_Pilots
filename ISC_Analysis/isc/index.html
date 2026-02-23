@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="">
+	<meta name="author" content="Parra Lab">
+
+	<title>Parra lab at City University of New York</title>
+
+	<!-- Libraries -->
+
+	<script src="../scripts/jquery-1.js"></script>
+	<script src="../scripts/underscore-min.js"></script>
+	<script src="../scripts/bootstrap.js"></script>
+	<script src="../scripts/backbone-min.js"></script>
+	<script src="../scripts/d3.js"></script>
+
+	<!-- Custom CSS -->
+
+	<link href="../styles/bootstrap.css" rel="stylesheet">
+	<link href="../styles/stylesheet.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+ <div class="container-fluid">
+   <div class="row p-header">
+      <nav class="navbar navbar-default site-nav">
+        <div class="containter-fluid">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-sm-12">
+                <img style="max-height:120px; margin-top:-70px;" class="hidden-sm hidden-xs" src="../images/seal.jpg" id="lab-seal">
+                <div style="display:inline-block; max-width: 600px;">
+
+                  <h1 style="display:inline-block; margin-left:10px; margin-top: 25px;">Parra Lab</h1>
+                  <p style="display:inline-block; margin-left:10px">
+                    <a href="https://www.ccny.cuny.edu/bme">Biomedical
+                    Engineering Department</a> |
+                    <a href="https://www.ccny.cuny.edu">CCNY</a> |
+		    <a href="https://www.cuny.edu">City University of New York</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="row nav site-nav">
+                  <li role="presentation" class="col-sm-2"><a href="../index.html">Home</a></li>
+                  <li role="presentation" class="col-sm-2"><a href="../projects.html">Projects</a></li>
+                  <li role="presentation" class="col-sm-2"><a href="../people.html">People</a></li>
+                  <li role="presentation" class="col-sm-2"><a href="../publications.html">Publications</a></li>
+                  <li role="presentation" class="col-sm-2"><a href="../resources.html">Resources</a></li>
+                  <li role="presentation" class="col-sm-2"><a href="../courses.html">Courses</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+  </div>
+
+<h2>Inter Subject Correlation in EEG</h2>
+
+This is matlab code to compute intersubject correlation (ISC) in EEG
+using correlated component analysis, <br>as described in the references below
+(description closest to the present code is in 
+<a href=http://eneuro.org/content/3/6/ENEURO.0203-16.2016>Cohen and Parra, 2016</a>).<p>
+
+<h4>
+<a href=isceeg.m>isceeg.m</a> -- EEG specific code, keeping clutter to a minimum.
+</h4>
+
+<p>
+You will need these files to run this code:<br>
+ <ul>
+ <a href=topoplot.m>topoplot.m</a>    -- stand-alone version of EEGlab's popular display function (does not require EEGlab). <br>
+ <a href=BioSemi64.loc>BioSemi64.loc</a> -- BioSemi location file for topoplot<br>
+ <a href=notBoxPlot.m>notBoxPlot.m</a>  -- stand-alone version of Rob Campbell's scatter plot (does not require suplementary functions)<br>
+ <a href=EEGVolume.mat> EEGVolume.mat</a> -- Samantha Cohen's EEG data with 64 electrodes from 18 subjects while watching <a href=https://www.youtube.com/watch?v=DEo-rw2TeAU>this video</a>. (<a href=http://www.parralab.org/isc/memory-videos.html>Here's</a> a list of all stimuli).
+ </ul>
+<p>
+  Other ISC files:<br>
+  <ul>
+  <a href="preprocessEEG_RPCA.m">preprocessEEG_RPCA.m</a> -- EEG preprocessing routine utilizing <a href="https://github.com/areslp/matlab/tree/master/RPCA">RPCA</a><br>
+  <a href="multiStimISC.m">multiStimISC.m</a> -- ISC routine that can be run on multiple stimuli simultaneously<br>
+  </ul>
+</p>
+
+<p>
+Stimuli:<br>
+<ul>
+<a href=http://www.parralab.org/isc/memory-videos.html>Here</a> 
+are all of the audiovisual (AV), audiovisual scrambled (AVsc), and audio only (A Only) videos used in 
+<a href=http://eneuro.org/content/3/6/ENEURO.0203-16.2016>Cohen and Parra (2016)</a><br>
+(The visual only (V Only) stimuli from this paper are identical to the audiovisual stimuli except they are played silently.)<br>
+</ul>
+</p>
+
+<p>
+Faster code:<br>
+More efficient code to perform Correlated Component Analysis (the core of the analysis method we have used to measures ISC in EEG) is now available here:
+<ul>
+<a href=http://www.parralab.org/corrca/>Correlated Component Analysis code</a> 
+</ul>
+</p>
+
+
+References:<br>
+
+Find papers <a href=http://www.parralab.org/publications.html>here</a>.
+
+<ol>
+
+<li>
+Lucas C. Parra, Stefan Haufe, Jacek P. Dmochowski, "Correlated Components Analysis --- Extracting Reliable Dimensions in Multivariate Data", Neurons, Behavior, Data Analysis and Theory (NBDT). arXiv:1801.08881. Jan 29, 2019.
+<a href=https://nbdt.scholasticahq.com/article/7125-correlated-components-analysis-extracting-reliable-dimensions-in-multivariate-data>paper</a>
+</li>
+
+<li>
+Samantha S Cohen*, Jens Madsen*, Gad Touchan, Denise Robles, Stella F. A. Lima, Simon Henin, Lucas C. Parra, 
+"Neural engagement with online educational videos predicts learning performance for individual students", Neurobiology of learning and memory. 2018 Nov 1;155:60-4. 
+<a href=https://www.sciencedirect.com/science/article/pii/S1074742718301485>paywalled paper</a>
+<a href=https://www.biorxiv.org/content/early/2018/01/24/253260>same as preprint</a>
+</li>
+
+<li>
+Agustin Petroni*, Samantha S. Cohen*, Lei Ai, Nicolas Langer, Simon Henin, Tamara Vanderwal, Michael P Milham, and Lucas C Parra, 
+The Variability of Neural Responses to Naturalistic Videos Change with Age and Sex, eNeuro, January 2018. 
+<a href=http://www.eneuro.org/content/early/2018/01/12/ENEURO.0244-17.2017>Full text</a>
+</li>
+
+<li>
+Ivan Iotzov*, Brian C Fidali*, Agustin Petroni, Mary M Conte, Nicholas D Schiff, Lucas C Parra, 
+Divergent neural responses to narrative speech in disorders of consciousness, Annals of Clinical and Translational Neurology:2328-9503, July 20, 2017. 
+<a href=https://onlinelibrary.wiley.com/doi/abs/10.1002/acn3.470>Full text</a>
+</li>
+
+<li>
+Samantha S. Cohen, Simon Henin, Lucas C. Parra, Engaging narratives evoke similar neural activity and lead to similar time perception, Scientific Reports, 6:4578, July 2017. 
+<a href=https://www.nature.com/articles/s41598-017-04402-4>Full text</a>
+</li>
+
+<li>
+Andreas Trier Poulsen, Simon Kamronn, Jacek Dmochowski, Lucas C. Parra, Lars Kai Hansen, 
+"Measuring engagement in a classroom: Synchronised neural recordings during a video presentation." Scientific Reports, 7, February, 2017. 
+<a href=https://www.nature.com/articles/srep43916.pdf>PDF</a>
+</li>
+
+<li>
+Samantha S. Cohen, Lucas C. Parra, Memorable audiovisual narratives synchronize sensory and supramodal neural responses, eNeuro, 3(6), November 2016.
+<a href=http://eneuro.org/content/3/6/ENEURO.0203-16.2016>Full text</a>
+</li>
+
+<li>
+Jason Ki, Simon Kelly, Lucas C. Parra, Attention strongly modulates
+reliability of neural responses to naturalistic narrative stimuli.
+Journal of Neuroscience, 36 (10), 3092-3101. 
+<a href=http://www.jneurosci.org/content/jneuro/36/10/3092.full.pdf>PDF</a>
+
+</li>
+
+<li>
+Jacek P. Dmochowski, Matthew A. Bezdek, Brian P. Abelson, John S.
+Johnson, Eric H. Schumacher, Lucas C. Parra, Audience preferences are
+predicted by temporal reliability of neural processing, Nature
+Communication, 5567, July 2014.
+</li>
+
+<li>
+Jacek P. Dmochowski, Paul Sajda, Joao Dias, Lucas C. Parra, Components
+of ongoing EEG with high correlation point to emotionally-laden attention
+-- a possible marker of engagement?, Frontiers in Human Neuroscience,
+6:112, April 2012.
+</li>
+
+</ol>
