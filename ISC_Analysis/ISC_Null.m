@@ -1,11 +1,9 @@
-function [ISC,ISC_persubject,ISC_persecond,W,A,p_ISC,p_ISC_persecond,null] = ISC_Null(datafile)
+function [ISC,ISC_persubject,ISC_persecond,W,A,p_ISC,p_ISC_persecond,null] = ISC_Null(X,fs)
 
-    gamma = 0.5;
-    Nsec  = 15;
+    gamma = 0.1;
+    Nsec  = 10;
     Ncomp = 3;
 
-    X = datafile;
-    fs = 500;
     X = X(:,:,:);
     X = preprocess(X,fs);
 

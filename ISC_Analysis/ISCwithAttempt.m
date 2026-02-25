@@ -1,5 +1,6 @@
-
+clc;clear all;
 inDir = "Data"; 
+FS = 500;
 doTrimToCommonLength = true;
 usePaddingToMaxLength = true;
 
@@ -63,6 +64,7 @@ for i = 1:nFiles
     end
 end
 
+EEG_3D = EEG_3D(:,:,:);
 %% COMPUTE ISC PER ROUND
 
 rounds = unique(roundIdx);
@@ -88,8 +90,8 @@ for k = 1:numel(rounds)
         Xr = Xr(1:lastValid,:,:);
     end
 
-    [ISC, ISC_persubject, ISC_persecond, W, A] = ISC_illuminate(Xr);
-
+    [ISC, ISC_persubject, ISC_persecond, W, A] = isceeg(Xr, FS);
+    %[ISC,ISC_persubject,ISC_persecond,W,A,p_ISC,p_ISC_persecond,null] = isceeg(Xr, FS);
     outRow = outRow + 1;
     ISC_byRound(outRow).round = r;
     ISC_byRound(outRow).nRecordings = numel(idx);
@@ -109,3 +111,32 @@ plot(roundList, ISCvals, "-o");
 xlabel("Round"); ylabel("ISC (Component 1)");
 title("ISC per Round");
 grid on;
+%% Dot Plot
+roundList = [ISC_byRound.round];
+ISC1     = arrayfun(@(x) x.ISC(1), ISC_byRound);
+
+figure;
+scatter(roundList, ISC1, 60, "filled"); hold on
+plot(roundList, ISC1, "-"); % optional: connect the dots
+xlabel("Round"); ylabel("ISC (Component 1)");
+title("ISC (1st component) per Round");
+grid on
+ylim([0 0.15])
+
+%% Violin Plot
+roundList = [ISC_byRound.round];
+
+y = [];
+g = [];
+for i = 1:numel(ISC_byRound)
+    perSub = ISC_byRound(i).ISC_persubject;
+    y = [y; perSub(:)];
+    g = [g; repmat(roundList(i), numel(perSub), 1)];
+end
+
+figure;
+boxchart(g, y); hold on
+swarmchart(g, y, 18, "filled"); % dot cloud on top
+xlabel("Round"); ylabel("ISC per subject (Component 1)");
+title("ISC per subject by Round (Box + Dots)");
+grid on

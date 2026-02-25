@@ -1,3 +1,7 @@
+% This code take in all the trials from the experiment compute the ISC
+% between them
+
+clear all;
 inDir = "Data"; % <-- change
 doTrimToCommonLength = true;
 usePaddingToMaxLength = true;  % true: pad to max with NaN, false: truncate to min
@@ -13,7 +17,9 @@ nChs = zeros(nFiles,1);
 subjId = nan(nFiles,1);
 roundIdx = nan(nFiles,1);
 fileNames = strings(nFiles,1);
+FS = 500;
 
+%% Building the EEG Variable
 for i = 1:nFiles
     fileNames(i) = string(files(i).name);
     fp = fullfile(files(i).folder, files(i).name);
@@ -72,13 +78,14 @@ for i = 1:nFiles
     end
 end
 
-% Optional: trim to last timepoint where ALL values exist (removes NaN padding)
+%% Optional: trim to last timepoint where ALL values exist (removes NaN padding)
 if doTrimToCommonLength
     validT = squeeze(all(all(~isnan(EEG_3D),2),3));  % [T x 1]
     lastValid = find(validT, 1, "last");
     EEG_3D = EEG_3D(1:lastValid,:,:);
 end
 
+EEG_3D = EEG_3D(:,:,:);
 % Show mapping
 disp(table(fileNames, subjId, roundIdx, lens, ...
     'VariableNames', ["file","subject","round","nSamples"]));
@@ -99,14 +106,9 @@ for s = subjects'
 end
 
 % ---------------- Compute ISC once across ALL trials ----------------
-[ISC_all, ISC_persubject_all, ISC_persecond_all, W, A] = ISC_illuminate(EEG_3D);
+[ISC_all, ISC_persubject_all, ISC_persecond_all, W, A] = isceeg(EEG_3D, FS);
 
-% Extract one ISC value per trial (component 1 if multiple)
-if isvector(ISC_persubject_all)
-    ISC_trial = ISC_persubject_all(:);
-else
-    ISC_trial = ISC_persubject_all(:,1);
-end
+ISC_trial = ISC_persubject_all(1,:)';
 
 % ---------------- Compare ISC by round (within-subject) ----------------
 Tbl = table;
@@ -129,6 +131,7 @@ plot(rounds, mean(ISC_SR,1,'omitnan'), 'k-', 'LineWidth', 2);
 xlabel("Round"); ylabel("ISC per trial (comp1 if multi-comp)");
 title("ISC by round (each line=subject, black=mean)");
 grid on; hold off
+ylim([0 0.15])
 
 % Mixed-effects model (recommended)
 lme = fitlme(Tbl, 'ISC ~ Round + (1|Subject)');
